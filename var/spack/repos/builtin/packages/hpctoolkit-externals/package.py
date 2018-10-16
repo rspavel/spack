@@ -25,7 +25,7 @@
 from spack import *
 
 
-class HpctoolkitExternals(Package):
+class HpctoolkitExternals(AutotoolsPackage):
     """HPCToolkit performance analysis tool has many prerequisites and
     HpctoolkitExternals package provides all these prerequisites."""
 
@@ -35,14 +35,13 @@ class HpctoolkitExternals(Package):
     version('master')
     version('2017.06', tag='release-2017.06')
 
-    parallel = False
 
-    def install(self, spec, prefix):
+    def configure_args(self):
 
-        options = ['CC=%s' % self.compiler.cc,
-                   'CXX=%s' % self.compiler.cxx]
+        spec = self.spec
 
-        with working_dir('spack-build', create=True):
-            configure = Executable('../configure')
-            configure('--prefix=%s' % prefix, *options)
-            make('install')
+        options = []
+        options.append('CC={0}'.format(spack_cc))
+        options.append('CXX={0}'.format(spack_cxx))
+
+        return options
