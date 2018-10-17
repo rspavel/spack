@@ -35,7 +35,7 @@ class HpctoolkitExternals(AutotoolsPackage):
     version('master')
     version('2017.06', tag='release-2017.06')
 
-    depends_on('binutils')
+    depends_on('binutils+libiberty')
     depends_on('libdwarf')
     depends_on('libelf')
     depends_on('libmonitor')
@@ -44,6 +44,10 @@ class HpctoolkitExternals(AutotoolsPackage):
     depends_on('xerces-c')
 
     depends_on("cmake")
+
+    patch('libiberty64.patch')
+
+    build_directory = 'bld'
 
     def configure_args(self):
         spec = self.spec
@@ -58,5 +62,8 @@ class HpctoolkitExternals(AutotoolsPackage):
         options.append('--with-libunwind={0}'.format(spec['libunwind'].prefix))
         options.append('--with-libxml2={0}'.format(spec['libxml2'].prefix))
         options.append('--with-xerces={0}'.format(spec['xerces-c'].prefix))
+
+        options.append('CFLAGS={0}'.format(self.compiler.pic_flag))
+        options.append('CXXFLAGS={0}'.format(self.compiler.pic_flag))
 
         return options
