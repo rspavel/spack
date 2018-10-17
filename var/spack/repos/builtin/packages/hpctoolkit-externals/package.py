@@ -43,6 +43,8 @@ class HpctoolkitExternals(AutotoolsPackage):
     depends_on('libxml2')
     depends_on('xerces-c')
 
+    depends_on("cmake")
+
     def configure_args(self):
         spec = self.spec
 
