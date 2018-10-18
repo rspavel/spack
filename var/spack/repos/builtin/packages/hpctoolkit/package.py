@@ -42,8 +42,8 @@ class Hpctoolkit(AutotoolsPackage):
         options.append('CXX={0}'.format(spack_cxx))
         options.append('--with-externals={0}'.format(spec['hpctoolkit-externals'].prefix))
         if '+mpi' in spec:
-            options.append(['MPICXX=%s' % spec['mpi'].mpicxx])
+            options.append('MPICXX=%s' % spec['mpi'].mpicxx)
         if '+papi' in spec:
-            options.append(['--with-papi=%s' % spec['papi'].prefix])
+            options.append('--with-papi=%s' % spec['papi'].prefix)
 
         return options
