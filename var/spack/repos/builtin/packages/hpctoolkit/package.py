@@ -23,9 +23,10 @@
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 ##############################################################################
 from spack import *
+import os
 
 
-class Hpctoolkit(Package):
+class Hpctoolkit(AutotoolsPackage):
     """HPCToolkit is an integrated suite of tools for measurement and analysis
     of program performance on computers ranging from multicore desktop systems
     to the nation's largest supercomputers. By using statistical sampling of
@@ -47,20 +48,21 @@ class Hpctoolkit(Package):
     depends_on('hpctoolkit-externals@2017.06', when='@2017.06')
     depends_on('hpctoolkit-externals@master', when='@master')
 
-    def install(self, spec, prefix):
+    # Doesn't actually need to autoreconf
+    depends_on('autoconf')
+    depends_on('automake')
+    depends_on('libtool')
 
-        options = ['CC=%s' % self.compiler.cc,
-                   'CXX=%s' % self.compiler.cxx,
-                   '--with-externals=%s' % spec['hpctoolkit-externals'].prefix]
+    def configure_args(self):
+        spec = self.spec
 
+        options = []
+        options.append('CC={0}'.format(spack_cc))
+        options.append('CXX={0}'.format(spack_cxx))
+        options.append('--with-externals={0}'.format(spec['hpctoolkit-externals'].prefix))
         if '+mpi' in spec:
-            options.extend(['MPICXX=%s' % spec['mpi'].mpicxx])
-
+            options.append(['MPICXX=%s' % spec['mpi'].mpicxx])
         if '+papi' in spec:
-            options.extend(['--with-papi=%s' % spec['papi'].prefix])
+            options.append(['--with-papi=%s' % spec['papi'].prefix])
 
-        # TODO: BG-Q configure option
-        with working_dir('spack-build', create=True):
-            configure = Executable('../configure')
-            configure('--prefix=%s' % prefix, *options)
-            make('install')
+        return options

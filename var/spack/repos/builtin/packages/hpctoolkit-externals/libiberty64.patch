@@ -1,0 +1,13 @@
+diff --git a/symtabAPI/configure b/symtabAPI/configure
+index ea4c023..08a14d3 100755
+--- a/symtabAPI/configure
++++ b/symtabAPI/configure
+@@ -24,7 +24,7 @@ set -- \
+     -DCMAKE_CXX_COMPILER="$symtab_cxx_path" \
+     -DCROSS_COMPILING=1 \
+     -DPATH_BOOST="$boost_prefix" \
+-    -DIBERTY_LIBRARIES="$binutils_prefix/lib/libiberty.a" \
++    -DIBERTY_LIBRARIES="$binutils_prefix/lib64/libiberty.a" \
+     -DLIBELF_INCLUDE_DIR="$libelf_inc" \
+     -DLIBELF_LIBRARIES="$libelf_lib/libelf.so" \
+     -DLIBDWARF_INCLUDE_DIR="$libdwarf_inc" \
