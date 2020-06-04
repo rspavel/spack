@@ -3,25 +3,10 @@
 #
 # SPDX-License-Identifier: (Apache-2.0 OR MIT)
 
-# ----------------------------------------------------------------------------
-# If you submit this package back to Spack as a pull request,
-# please first remove this boilerplate and all FIXME comments.
-#
-# This is a template package file for Spack.  We've put "FIXME"
-# next to all the things you'll want to change. Once you've handled
-# them, you can save this file and test your package like this:
-#
-#     spack install multi-bgk
-#
-# You can edit this file again by typing:
-#
-#     spack edit multi-bgk
-#
-# See the Spack documentation for more information on packaging.
-# ----------------------------------------------------------------------------
 
 from spack import *
 import os
+
 
 class MultiBgk(MakefilePackage):
     """FIXME: Put a proper description of your package here."""
@@ -55,6 +40,6 @@ class MultiBgk(MakefilePackage):
         make(*self.build_targets)
 
     def install(self, spec, prefix):
-        install_tree('exec', prefix.exec)
         install_tree('input', prefix.input)
         install_tree('Data', prefix.Data)
+        install_tree('exec', prefix.exec)
